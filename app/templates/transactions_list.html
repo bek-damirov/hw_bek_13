@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block content %}
+     <div><center><h1> Главная </h1></center></div>
+{% if current_user.is_authenticated %}
+<p> <a class="btn btn-primary" href="{{ url_for('transaction_create')}}">Создать новую транзакцию </a></p>
+<p><a class="btn btn-primary" href="{{ url_for('logout')}}"> Выйти из аккаунта</a></p>
+{% else %}
+  <p><a class="btn btn-primary" href="{{ url_for('register')}}"> Регистрация </a></p>
+  <p><a class="btn btn-primary" href="{{ url_for('login')}}"> Вход </a></p>
+{% endif %}
+
+
+</p>
+    <table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Период</th>
+      <th scope="col">Сумма </th>
+      <th scope="col">Статус </th>
+      <th scope="col">Валюта</th>
+      <th scope="col">Комментарии проводки</th>
+      <th scope="col">действия</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for trans in transaction %}
+    <tr>
+      <th scope="row">{{ trans.id }}</th>
+      <td>{{ trans.period}}</td>
+      <td>{{ trans.value }}</td>
+      <td>{{ trans.status }}</td>
+      <td>{{ trans.unit }}</td>
+      <td>{{ trans.subject }}</td>
+      <td>
+        <a class="btn btn-outline" href="{{ url_for('transaction_detail', id=trans.id)}}">Подробнее </a>
+      </td>
+
+    </tr>
+{% endfor %}
+
+  </tbody>
+</table>
+
+{% endblock content %}
+
+
